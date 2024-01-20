@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 void main() => runApp(const MyApp());
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -11,6 +11,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late AudioPlayer player;
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +34,17 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  // TODO: cow button
+                onPressed: () async {
+                  await player.setAsset('assets/audio/cow.mp3');
+                  player.play();
                 },
                 child: const Text('Cow'),
               ),
               const SizedBox(width: 10),
               ElevatedButton(
-                onPressed: () {
-                  // TODO: horse button
+                onPressed: () async {
+                  await player.setAsset('assets/audio/horse.mp3');
+                  player.play();
                 },
                 child: const Text('Horse'),
               ),
